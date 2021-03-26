@@ -2,6 +2,7 @@ import Page from '../components/Page';
 import React from 'react';
 import {Card, CardBody, CardHeader, Col, Row} from "reactstrap";
 import CreateCourse from "../components/CreateCourse";
+import CourseInfo from "../components/CourseInfo";
 //import dl from "../components/data1.json";
 
 export default function DashboardPage(){
@@ -12,7 +13,7 @@ export default function DashboardPage(){
             breadcrumbs={[{ name: 'Dạy học', active: true }]}
         >
             <Row>
-              <Col md="6" sm="12" xs="12">
+              <Col md="4" sm="12" xs="12">
                 <Card>
                   <CardHeader>Tạo khóa học</CardHeader>
                   <CardBody>
@@ -20,7 +21,8 @@ export default function DashboardPage(){
                   </CardBody>
                 </Card>
               </Col>
-              <Col md="6" sm="12" xs="12">
+              <Col md="8" sm="12" xs="12">
+                  <CourseInfo/>
                 {/*<table className="table table-striped table-inverse table-hover">*/}
                 {/*  <thead>*/}
                 {/*    <tr>*/}
