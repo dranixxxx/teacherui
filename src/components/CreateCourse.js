@@ -1,12 +1,12 @@
 import  React, { Component } from  'react';
-import {Form, FormGroup, Input, Label} from 'reactstrap';
+import {Form, FormGroup, Input, Label, Button} from 'reactstrap';
 import TreeView from "@material-ui/lab/TreeView";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import TreeItem from "@material-ui/lab/TreeItem";
 import  djangoService  from  '../api/djangoapi';
 import {MDBCol, MDBContainer, MDBTreeview, MDBTreeviewList, MDBTreeviewItem, MDBRow} from "mdbreact";
-
+import axios from "axios"
 const  django =  new  djangoService();
 
 export default class CreateCourse extends Component {
@@ -14,66 +14,67 @@ export default class CreateCourse extends Component {
     super(props);
         this.state = {
             KPs: [],
-            courses: [],
+            courses: '',
+            price:'',
+            duration:'',
+            start_time:'',
+            room:'',
+            teacherid:'',
             course_info: [],
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    // componentDidMount() {
-    //   var  self  =  this;
-    //   django.getKP().then(function (result) {
-    //     console.log(result);
-    //       self.setState({ KPs:  result})
-    //   });
-    // }
-
-    // componentDidMount(){
-    //     const { match: { params } } = this.props;
-    //     if(params && params.id)
-    //     {
-    //       django.getcourse(params.id).then((c)=>{
-    //         this.refs.name.value = c.name;
-    //         //this.refs.KP.value = c.corr_KPs.name;
-    //         this.refs.duration.value = c.duration;
-    //         this.refs.room.value = c.room;
-    //         this.refs.teacherid.value = c.teacherid;
-    //         this.refs.start_time.value = c.start_time;
-    //         //this.refs.start_time.value = c.description;
-    //       })
-    //     }
-    //   }
-
-    handleCreate(){
-        console.log(this.ref.name.value)
-        django.createcourse(
-          {
-            "name": this.ref.name.value,
-            //this.refs.KP.value = c.corr_KPs.name;
-            "price": this.ref.price.value,
-            "duration": this.ref.duration.value,
-            "room": this.ref.room.value,
-            "teacher_id": this.ref.teacher_id.value,
-            "start_time": this.ref.start_time.value,
-            //this.refs.start_time.value = c.description;
-        }
-        ).then((result)=>{
-          alert("Course created!");
-        }).catch(()=>{
-          alert('There was an error! Please re-check your form.');
-        });
+    componentDidMount() {
+      var  self  =  this;
+      django.getKP().then(function (result) {
+        console.log(result);
+          self.setState({ KPs:  result})
+      });
     }
 
-    handleSubmit(event) {
-        const { match: { params } } =  this.props;
-            this.handleCreate();
-        event.preventDefault();
-    }
+
+
+    handleSubmit = event => {
+    event.preventDefault();
+
+    const data = {
+      name: this.state.courses,
+      price: this.state.price,
+      duration: this.state.duration,
+      corr_KPs:[{
+                "tree_id": "1.9.1.1.1",
+                "name": "Căn bậc hai",
+            }],
+      room: this.state.room,
+      teacher_id: this.state.teacherid,
+      start_time: this.state.start_time,
+      schedule: "['monday_morning', 'tuesday_afternoon', 'wednesday_evening']",
+    };
+
+    axios.post(`https://45.64.126.93:8000/api/courses/`, {
+      "name": this.state.courses,
+      "price": this.state.price,
+      "duration": this.state.duration,
+      "corr_KPs":[{
+                "tree_id": "1.9.1.1.1",
+                "name": "Căn bậc hai",
+            }],
+      "room": this.state.room,
+      "teacher_id": this.state.teacherid,
+      "start_time": this.state.start_time,
+      "schedule": "['monday_morning', 'tuesday_afternoon', 'wednesday_evening']",
+    })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+  }
 
     render(){
 
         return (
-            <Form onSubmit={this.handleSubmit}
+            <Form
                 >
                   <FormGroup>
                     <Label for="Course">Course</Label>
@@ -81,56 +82,56 @@ export default class CreateCourse extends Component {
                       type="text"
                       name="course"
                       placeholder="with a placeholder"
-                      ref='name'
+                      onChange={(event) => this.setState({courses: `${event.target.value}`})}
                     />
                   </FormGroup>
-                  {/*<FormGroup>*/}
-                  {/*  <Label for="KP">KP</Label>*/}
-                  {/*  <MDBContainer header='Animated'>*/}
-                  {/*      <MDBRow>*/}
-                  {/*      <MDBCol md='6'>*/}
-                  {/*        <MDBTreeview*/}
-                  {/*          theme='animated'*/}
-                  {/*          header='Folders'*/}
-                  {/*          className='w-20'*/}
-                  {/*          style={{*/}
-                  {/*          maxHeight: '400px',*/}
-                  {/*          overflowY: 'auto'}}*/}
-                  {/*        >*/}
-                  {/*          {this.state.KPs.map((a)  =>*/}
-                  {/*            <MDBTreeviewList title={a.name}  far open>*/}
-                  {/*              {a.subset.map((b)  =>*/}
-                  {/*                <MDBTreeviewList title={b.name} far open>*/}
-                  {/*                  {b.subset.map((c)  =>*/}
-                  {/*                    <MDBTreeviewList title={c.name} far open>*/}
-                  {/*                      {c.subset.map((d)  =>*/}
-                  {/*                        <MDBTreeviewList title={d.name} far open>*/}
-                  {/*                          {d.subset.map((e)  =>*/}
-                  {/*                            <MDBTreeviewItem  title={e.name} far onClick={() =>this.setState({courseinfo : e.name})}/>*/}
-                  {/*                          )}*/}
-                  {/*                        </MDBTreeviewList>*/}
-                  {/*                      )}*/}
-                  {/*                    </MDBTreeviewList>*/}
-                  {/*                  )}*/}
-                  {/*                </MDBTreeviewList>*/}
-                  {/*              )}*/}
-                  {/*            </MDBTreeviewList>*/}
-                  {/*          )}*/}
-                  {/*        </MDBTreeview>*/}
-                  {/*      </MDBCol>*/}
-                  {/*      <MDBCol md='6'>*/}
-                  {/*          <div ref='KP'>{this.state.courseinfo}</div>*/}
-                  {/*      </MDBCol>*/}
-                  {/*      </MDBRow>*/}
-                  {/*  </MDBContainer>*/}
-                  {/*</FormGroup>*/}
+                  <FormGroup>
+                    <Label for="KP">KP</Label>
+                    <MDBContainer header='Animated'>
+                        <MDBRow>
+                        <MDBCol md='6'>
+                          <MDBTreeview
+                            theme='animated'
+                            header='Folders'
+                            className='w-20'
+                            style={{
+                            maxHeight: '400px',
+                            overflowY: 'auto'}}
+                          >
+                            {this.state.KPs.map((a)  =>
+                              <MDBTreeviewList title={a.name}  far open>
+                                {a.subset.map((b)  =>
+                                  <MDBTreeviewList title={b.name} far open>
+                                    {b.subset.map((c)  =>
+                                      <MDBTreeviewList title={c.name} far open>
+                                        {c.subset.map((d)  =>
+                                          <MDBTreeviewList title={d.name} far open>
+                                            {d.subset.map((e)  =>
+                                              <MDBTreeviewItem  title={e.name} far onClick={() =>this.setState({courseinfo : e.name})}/>
+                                            )}
+                                          </MDBTreeviewList>
+                                        )}
+                                      </MDBTreeviewList>
+                                    )}
+                                  </MDBTreeviewList>
+                                )}
+                              </MDBTreeviewList>
+                            )}
+                          </MDBTreeview>
+                        </MDBCol>
+                        <MDBCol md='6'>
+                            <div ref='KP'>{this.state.courseinfo}</div>
+                        </MDBCol>
+                        </MDBRow>
+                    </MDBContainer>
+                  </FormGroup>
                   <FormGroup>
                     <Label for="Price">Price</Label>
                     <Input
                       type="number"
                       name="price"
                       placeholder="price placeholder"
-                      ref='price'
+                      onChange={(event) => this.setState({price: `${event.target.value}`})}
                     />
                   </FormGroup>
                   <FormGroup>
@@ -139,12 +140,12 @@ export default class CreateCourse extends Component {
                       type="number"
                       name="duration"
                       placeholder="duration placeholder"
-                      ref='duration'
+                      onChange={(event) => this.setState({duration: `${event.target.value}`})}
                     />
                   </FormGroup>
                   <FormGroup>
                   <Label for="room">Type</Label>
-                  <Input type="select" name="type" ref='room'>
+                  <Input type="select" name="type" onChange={(event) => this.setState({room: `${event.target.value}`})}>
                     <option>VCP</option>
                     <option>Zoom</option>
                     <option>Moodle</option>
@@ -156,7 +157,7 @@ export default class CreateCourse extends Component {
                       type="text"
                       name="teacher"
                       placeholder="price placeholder"
-                      ref='teacherid'
+                      onChange={(event) => this.setState({teacherid: `${event.target.value}`})}
                     />
                   </FormGroup>
                   <FormGroup>
@@ -165,12 +166,10 @@ export default class CreateCourse extends Component {
                     type="time"
                     name="time"
                     placeholder="time placeholder"
-                    ref='start_time'
+                    onChange={(event) => this.setState({start_time: `${event.target.value}`})}
                   />
                   </FormGroup>
-                  <button type="submit" className="btn btn-primary">
-                    Submit
-                  </button>
+                <Button onClick={this.handleSubmit}>Submit</Button>
                 </Form>
         );
     }
