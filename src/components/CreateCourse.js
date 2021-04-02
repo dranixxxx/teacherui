@@ -1,15 +1,15 @@
 import  React, { Component } from  'react';
-import {Form, FormGroup, Input, Label, Button} from 'reactstrap';
-import TreeView from "@material-ui/lab/TreeView";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import TreeItem from "@material-ui/lab/TreeItem";
+import {Form, FormGroup, Input, Label, Button, } from 'reactstrap';
+import Select from "react-select";
 import  djangoService  from  '../api/djangoapi';
 import {MDBCol, MDBContainer, MDBTreeview, MDBTreeviewList, MDBTreeviewItem, MDBRow} from "mdbreact";
 import axios from "axios"
+import AppContext from "../context/AppContext";
+
 const  django =  new  djangoService();
 
 export default class CreateCourse extends Component {
+    static contextType = AppContext
     constructor(props) {
     super(props);
         this.state = {
@@ -20,6 +20,7 @@ export default class CreateCourse extends Component {
             start_time:'',
             room:'',
             teacherid:'',
+            corr_KPs:'',
             course_info: [],
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,8 +32,10 @@ export default class CreateCourse extends Component {
         console.log(result);
           self.setState({ KPs:  result})
       });
+      const user = this.context.user
+    this.setState({user: this.context})
+    console.log(this.context) // { name: 'Tania', loggedIn: true }
     }
-
 
 
     handleSubmit = event => {
@@ -42,28 +45,28 @@ export default class CreateCourse extends Component {
       name: this.state.courses,
       price: this.state.price,
       duration: this.state.duration,
-      corr_KPs:[{
-                "tree_id": "1.9.1.1.1",
-                "name": "Căn bậc hai",
-            }],
+      corr_KPs:[
+            ],
       room: this.state.room,
       teacher_id: this.state.teacherid,
       start_time: this.state.start_time,
       schedule: "['monday_morning', 'tuesday_afternoon', 'wednesday_evening']",
     };
 
-    axios.post(`https://45.64.126.93:8000/api/courses/`, {
+    axios.post(`http://45.64.126.93:8000/api/courses/`, {
       "name": this.state.courses,
       "price": this.state.price,
       "duration": this.state.duration,
-      "corr_KPs":[{
-                "tree_id": "1.9.1.1.1",
-                "name": "Căn bậc hai",
-            }],
+        "corr_KPs": ["1.9.1.1.1"],
+      // "corr_KPs":[{
+      //           "tree_id": "1.9.1.1.1",
+      //           "name": "Căn bậc hai",
+      //       }],
       "room": this.state.room,
       "teacher_id": this.state.teacherid,
       "start_time": this.state.start_time,
-      "schedule": "['monday_morning', 'tuesday_afternoon', 'wednesday_evening']",
+        "schedule": ["monday_morning"]
+      // "schedule": "['monday_morning', 'tuesday_afternoon', 'wednesday_evening']",
     })
       .then(res => {
         console.log(res);
@@ -72,10 +75,10 @@ export default class CreateCourse extends Component {
   }
 
     render(){
-
         return (
             <Form
                 >
+                <div></div>
                   <FormGroup>
                     <Label for="Course">Course</Label>
                     <Input
@@ -85,6 +88,16 @@ export default class CreateCourse extends Component {
                       onChange={(event) => this.setState({courses: `${event.target.value}`})}
                     />
                   </FormGroup>
+                  <FormGroup>
+                  <Label for="room">Type</Label>
+                  <Input type="select" name="type" onChange={(event) => this.setState({room: `${event.target.value}`})}>
+                      {this.state.KPs.map((a)  =>
+                          <option> {a.name}  </option>
+
+                      )}
+                  </Input>
+                  </FormGroup>
+
                   <FormGroup>
                     <Label for="KP">KP</Label>
                     <MDBContainer header='Animated'>
