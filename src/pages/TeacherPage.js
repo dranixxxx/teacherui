@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import dl from '../components/data1.json'
-import CreateCourse1 from '../components/CreateCourse1';
+import CreateCourse from '../components/CreateCourse';
 import {Card, CardBody, CardHeader, Col, Row} from "reactstrap";
 
  class TeacherPage extends Component{
@@ -11,11 +11,11 @@ import {Card, CardBody, CardHeader, Col, Row} from "reactstrap";
 		return (
 		    <>
             <Row>
-          <Col md="6" sm="12" xs="12">
+          <Col md="8" sm="12" xs="12">
             <Card>
               <CardHeader>Tạo khóa học</CardHeader>
               <CardBody>
-                <CreateCourse1/>
+                <CreateCourse/>
               </CardBody>
             </Card>
           </Col>

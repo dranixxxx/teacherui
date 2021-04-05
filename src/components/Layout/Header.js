@@ -1,5 +1,5 @@
-import Avatar from '../../components/Avatar';
-import { UserCard } from '../../components/Card';
+// import Avatar from '../../components/Avatar';
+// import { UserCard } from '../../components/Card';
 import Notifications from '../../components/Notifications';
 import SearchInput from '../../components/SearchInput';
 import { notificationsData } from '../../demos/header';
@@ -31,9 +31,9 @@ import {
     ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem,UncontrolledButtonDropdown,
 } from 'reactstrap';
 import bn from '../../utils/bemnames';
+import Profile from '../Profile';
 
 const bem = bn.create('header');
-
 const MdNotificationsActiveWithBadge = withBadge({
   size: 'md',
   color: 'primary',
@@ -51,7 +51,7 @@ class Header extends React.Component {
   state = {
     isOpenNotificationPopover: false,
     isNotificationConfirmed: false,
-    isOpenUserCardPopover: false,
+    // isOpenUserCardPopover: false,
   };
 
   toggleNotificationPopover = () => {
@@ -64,23 +64,24 @@ class Header extends React.Component {
     }
   };
 
-  toggleUserCardPopover = () => {
-    this.setState({
-      isOpenUserCardPopover: !this.state.isOpenUserCardPopover,
-    });
-  };
-
-  toggleDropdown = () => {
-   this.setState({
-      isOpenDropdown: !this.state.isOpenDropdown,
-    });
-  };
+  // toggleUserCardPopover = () => {
+  //   this.setState({
+  //     isOpenUserCardPopover: !this.state.isOpenUserCardPopover,
+  //   });
+  // };
+  //
+  // toggleDropdown = () => {
+  //  this.setState({
+  //     isOpenDropdown: !this.state.isOpenDropdown,
+  //   });
+  // };
   handleSidebarControlButton = event => {
     event.preventDefault();
     event.stopPropagation();
 
     document.querySelector('.cr-sidebar').classList.toggle('cr-sidebar--open');
   };
+
 
   render() {
     const { isNotificationConfirmed } = this.state;
@@ -124,110 +125,111 @@ class Header extends React.Component {
             </Popover>
           </NavItem>
 
-          <NavItem>
-            <NavLink id="Popover2">
-              <Avatar
-                onClick={this.toggleUserCardPopover}
-                className="can-click"
-              />
-            </NavLink>
-            <Popover
-              placement="bottom-end"
-              isOpen={this.state.isOpenUserCardPopover}
-              toggle={this.toggleUserCardPopover}
-              target="Popover2"
-              className="p-0 border-0"
-              style={{ minWidth: 250 }}
-            >
-              <PopoverBody className="p-0 border-light">
-                <UserCard
-                  title="Jane"
-                  subtitle="jane@jane.com"
-                  text="Last updated 3 mins ago"
-                  className="border-light"
-                >
-                  <ListGroup flush>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <ButtonDropdown isOpen={this.state.isOpenDropdown} toggle={this.toggleDropdown}>
-                        <UncontrolledButtonDropdown direction="left">
-                         <DropdownToggle caret>
-                          <MdPersonPin /> Profile
-                         </DropdownToggle>
-                            <DropdownMenu>
-                              <DropdownItem>
-                                <div className="box">
-                                  <p className="title1">
-                                    <MdAccountCircle/>Contact
-                                  </p>
+          <Profile/>
+          {/*<NavItem>*/}
+          {/*  <NavLink id="Popover2">*/}
+          {/*    <Avatar*/}
+          {/*      onClick={this.toggleUserCardPopover}*/}
+          {/*      className="can-click"*/}
+          {/*    />*/}
+          {/*  </NavLink>*/}
+          {/*  <Popover*/}
+          {/*    placement="bottom-end"*/}
+          {/*    isOpen={this.state.isOpenUserCardPopover}*/}
+          {/*    toggle={this.toggleUserCardPopover}*/}
+          {/*    target="Popover2"*/}
+          {/*    className="p-0 border-0"*/}
+          {/*    style={{ minWidth: 250 }}*/}
+          {/*  >*/}
+          {/*    <PopoverBody className="p-0 border-light">*/}
+          {/*      <UserCard*/}
+          {/*        title="Jane"*/}
+          {/*        subtitle="jane@jane.com"*/}
+          {/*        text="Last updated 3 mins ago"*/}
+          {/*        className="border-light"*/}
+          {/*      >*/}
+          {/*        <ListGroup flush>*/}
+          {/*          <ListGroupItem tag="button" action className="border-light">*/}
+          {/*            <ButtonDropdown isOpen={this.state.isOpenDropdown} toggle={this.toggleDropdown}>*/}
+          {/*              <UncontrolledButtonDropdown direction="left">*/}
+          {/*               <DropdownToggle caret>*/}
+          {/*                <MdPersonPin /> Profile*/}
+          {/*               </DropdownToggle>*/}
+          {/*                  <DropdownMenu>*/}
+          {/*                    <DropdownItem>*/}
+          {/*                      <div className="box">*/}
+          {/*                        <p className="title1">*/}
+          {/*                          <MdAccountCircle/>Contact*/}
+          {/*                        </p>*/}
 
 
-                                  <p className="padd-top">
-                                    <MdCake/>2-2-2222
-                                  </p>
+          {/*                        <p className="padd-top">*/}
+          {/*                          <MdCake/>2-2-2222*/}
+          {/*                        </p>*/}
 
-                                  <p>
-                                    <MdPermPhoneMsg/>0123456789
-                                  </p>
+          {/*                        <p>*/}
+          {/*                          <MdPermPhoneMsg/>0123456789*/}
+          {/*                        </p>*/}
 
-                                  <p>
-                                    <MdEmail/>qwerty@gmail.com
-                                  </p>
+          {/*                        <p>*/}
+          {/*                          <MdEmail/>qwerty@gmail.com*/}
+          {/*                        </p>*/}
 
-                                  <p>
-                                    <MdHome/>123 lorem ipsum,
-                                  </p>
+          {/*                        <p>*/}
+          {/*                          <MdHome/>123 lorem ipsum,*/}
+          {/*                        </p>*/}
 
-                                </div>
+          {/*                      </div>*/}
 
-                                <div className="box">
+          {/*                      <div className="box">*/}
 
-                                  <p className="title1">
-                                    <MdGamepad/>Skill
-                                  </p>
+          {/*                        <p className="title1">*/}
+          {/*                          <MdGamepad/>Skill*/}
+          {/*                        </p>*/}
 
-                                  <p className="padd-top">HTML, CSS</p>
-                                  <div className="skill">
+          {/*                        <p className="padd-top">HTML, CSS</p>*/}
+          {/*                        <div className="skill">*/}
 
-                                    <div className="skill-right r1"></div>
-                                  </div>
+          {/*                          <div className="skill-right r1"></div>*/}
+          {/*                        </div>*/}
 
-                                  <p>JavaScript/jQuery</p>
-                                  <div className="skill">
+          {/*                        <p>JavaScript/jQuery</p>*/}
+          {/*                        <div className="skill">*/}
 
-                                    <div className="skill-right r2"></div>
-                                  </div>
+          {/*                          <div className="skill-right r2"></div>*/}
+          {/*                        </div>*/}
 
-                                  <p>PHP, SQL</p>
-                                  <div className="skill">
+          {/*                        <p>PHP, SQL</p>*/}
+          {/*                        <div className="skill">*/}
 
-                                    <div className="skill-right r3"></div>
-                                  </div>
-                                </div>
-                              </DropdownItem>
-                            </DropdownMenu>
-                        </UncontrolledButtonDropdown>
-                      </ButtonDropdown>
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdInsertChart /> Stats
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdMessage /> Messages
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdSettingsApplications /> Settings
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdHelp /> Help
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdExitToApp /> Signout
-                    </ListGroupItem>
-                  </ListGroup>
-                </UserCard>
-              </PopoverBody>
-            </Popover>
-          </NavItem>
+          {/*                          <div className="skill-right r3"></div>*/}
+          {/*                        </div>*/}
+          {/*                      </div>*/}
+          {/*                    </DropdownItem>*/}
+          {/*                  </DropdownMenu>*/}
+          {/*              </UncontrolledButtonDropdown>*/}
+          {/*            </ButtonDropdown>*/}
+          {/*          </ListGroupItem>*/}
+          {/*          <ListGroupItem tag="button" action className="border-light">*/}
+          {/*            <MdInsertChart /> Stats*/}
+          {/*          </ListGroupItem>*/}
+          {/*          <ListGroupItem tag="button" action className="border-light">*/}
+          {/*            <MdMessage /> Messages*/}
+          {/*          </ListGroupItem>*/}
+          {/*          <ListGroupItem tag="button" action className="border-light">*/}
+          {/*            <MdSettingsApplications /> Settings*/}
+          {/*          </ListGroupItem>*/}
+          {/*          <ListGroupItem tag="button" action className="border-light">*/}
+          {/*            <MdHelp /> Help*/}
+          {/*          </ListGroupItem>*/}
+          {/*          <ListGroupItem tag="button" action className="border-light">*/}
+          {/*            <MdExitToApp /> Signout*/}
+          {/*          </ListGroupItem>*/}
+          {/*        </ListGroup>*/}
+          {/*      </UserCard>*/}
+          {/*    </PopoverBody>*/}
+          {/*  </Popover>*/}
+          {/*</NavItem>*/}
         </Nav>
       </Navbar>
     );

@@ -1,10 +1,8 @@
 /*/lib/auth.js */
 
-import { useEffect } from "react";
 import Cookie from "js-cookie";
 import axios from "axios";
-import { Redirect } from 'react-router-dom';
-
+import { Redirect } from "react-router-dom";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://edunet.tranonline.ml";
 
@@ -32,7 +30,7 @@ export const registerUser = (name, email, password, role) => {
     });
 };
 
-export const login = (email, password, props) => {
+export const login = (email, password) => {
     //prevent function from being ran on the server
     if (typeof window === "undefined") {
         return;
@@ -49,7 +47,7 @@ export const login = (email, password, props) => {
                 //redirect back to home page for restaurance selection
 
                 window.history.pushState("","","/");
-console.log("success")
+                window.location.reload(true);
             })
             .catch((error) => {
                 //reject the promise and pass the error object back to the form
@@ -65,7 +63,8 @@ export const logout = () => {
     // sync logout between multiple windows
     window.localStorage.setItem("logout", Date.now());
     //redirect to the home page
-    window.history.push("/");
+    window.history.pushState("","","/");
+    window.location.reload(true);
 };
 
 //Higher Order Component to wrap our pages and logout simultaneously logged in tabs

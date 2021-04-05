@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Container, Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import { login } from "../api/auth";
-import AppContext from "../context/AppContext";
+import {Context} from "../context/Context";
 import logo200Image from '../assets/img/logo/logo_200.png';
 
 // class Login extends Component{
@@ -22,12 +22,14 @@ function Login() {
      const [data, updateData] = useState({ email: "", password: "" });
      const [loading, setLoading] = useState(false);
      const [error, setError] = useState(false);
-     const appContext = useContext(AppContext);
+     const appContext = useContext(Context);
+     console.log(appContext)
     useEffect(() => {
-        if (appContext.isAuthenticated===true) {
+        if (appContext.isAuthenticated) {
             console.log("aaa")
             //history.push("/"); // redirect if you're already logged in
             window.history.pushState("","","/");
+            window.location.reload(true);
         }
     }, []);
 
@@ -76,14 +78,9 @@ function Login() {
                         .then((res) => {
                             setLoading(false);
                             // set authed User in global context to update header/app state
-                             console.log(appContext)
-                            //console.log(appContext.user)
-                            // appContext.setUser(res.data.data);
-                            // console.log("success")
                         })
                         .catch((error) => {
                             setError(error.response);
-                            console.log("false")
                             setLoading(false);
                         });
                 }}

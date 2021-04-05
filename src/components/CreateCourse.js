@@ -4,12 +4,12 @@ import Select from "react-select";
 import  djangoService  from  '../api/djangoapi';
 import {MDBCol, MDBContainer, MDBTreeview, MDBTreeviewList, MDBTreeviewItem, MDBRow} from "mdbreact";
 import axios from "axios"
-import AppContext from "../context/AppContext";
+import { Context } from "../context/Context";
 
 const  django =  new  djangoService();
 
 export default class CreateCourse extends Component {
-    static contextType = AppContext
+    static contextType = Context
     constructor(props) {
     super(props);
         this.state = {
